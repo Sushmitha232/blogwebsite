@@ -1,17 +1,16 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { formatBlogPost, generateMetaTags } from '@/lib/utils';
-import { BlogPost } from '@/lib/types';
+import { Destination } from '@/lib/types';
 import { getEntries, CONTENT_TYPES } from '@/lib/contentstack';
 
-interface BlogPostPageProps {
+interface DestinationPageProps {
   params: {
     slug: string;
   };
 }
 
-async function getBlogPost(slug: string): Promise<BlogPost | null> {
+async function getDestination(slug: string): Promise<Destination | null> {
   try {
     const query = {
       query: {
@@ -21,99 +20,84 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
       },
     };
 
-    const posts = await getEntries(CONTENT_TYPES.BLOG_POST, query);
-    return posts && posts.length > 0 ? posts[0] : null;
+    const destinations = await getEntries(CONTENT_TYPES.DESTINATION, query);
+    return destinations && destinations.length > 0 ? destinations[0] : null;
   } catch (error) {
-    console.error('Error fetching blog post:', error);
+    console.error('Error fetching destination:', error);
     return null;
   }
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
-  const post = await getBlogPost(params.slug);
+export async function generateMetadata({ params }: DestinationPageProps) {
+  const destination = await getDestination(params.slug);
 
-  if (!post) {
+  if (!destination) {
     return {
-      title: 'Post Not Found',
+      title: 'Destination Not Found',
     };
   }
 
-  const metaTags = generateMetaTags(post);
-
   return {
-    title: metaTags.title,
-    description: metaTags.description,
-    keywords: metaTags.keywords,
+    title: `${destination.title} - Travel Guide`,
+    description: destination.description,
     openGraph: {
-      title: metaTags.title,
-      description: metaTags.description,
-      images: metaTags.ogImage ? [{ url: metaTags.ogImage }] : [],
-      url: metaTags.url,
+      title: destination.title,
+      description: destination.description,
+      images: destination.featured_image ? [{ url: destination.featured_image.url }] : [],
       type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: metaTags.title,
-      description: metaTags.description,
-      images: metaTags.ogImage ? [metaTags.ogImage] : [],
     },
   };
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getBlogPost(params.slug);
+export default async function DestinationPage({ params }: DestinationPageProps) {
+  const destination = await getDestination(params.slug);
 
-  if (!post) {
+  if (!destination) {
     notFound();
   }
-
-  const formattedPost = formatBlogPost(post);
 
   return (
     <div className="min-h-screen animated-bg">
       <Header />
 
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Back to blog link */}
+        {/* Back to destinations link */}
         <div className="mb-8">
           <Link
             href="/blog"
-            className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium transition-colors group"
+            className="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-medium transition-colors group"
           >
             <svg className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Blog
+            Back to Destinations
           </Link>
         </div>
 
         {/* Article header */}
         <header className="mb-12 text-center">
-          {post.category && (
-            <div className="mb-6">
-              <span className="inline-block glass text-blue-300 px-4 py-2 rounded-full text-sm font-medium border border-blue-400/30">
-                {post.category.title}
-              </span>
-            </div>
-          )}
+          <div className="mb-6 flex items-center justify-center gap-4">
+            <span className="inline-block glass text-emerald-300 px-4 py-2 rounded-full text-sm font-medium border border-emerald-400/30">
+              {destination.country}
+            </span>
+            <span className="inline-block glass text-blue-300 px-4 py-2 rounded-full text-sm font-medium border border-blue-400/30">
+              {destination.estimated_days || '3-5'} days
+            </span>
+          </div>
 
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-            {post.title}
+            {destination.title}
           </h1>
 
           <div className="flex items-center justify-center text-gray-400 mb-8 space-x-4">
-            <time dateTime={post.published_at} className="text-lg">
-              {formattedPost.formattedDate}
-            </time>
-            <span className="text-blue-400">•</span>
-            <span className="text-lg">{formattedPost.readingTime} min read</span>
+            <span className="text-lg">📍 {destination.location}</span>
           </div>
 
-          {post.featured_image && (
+          {destination.featured_image && (
             <div className="relative mb-12 rounded-2xl overflow-hidden glow">
               <img
-                src={post.featured_image.url}
-                alt={post.featured_image.title}
+                src={destination.featured_image.url}
+                alt={destination.featured_image.title}
                 className="w-full h-64 md:h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
@@ -121,48 +105,63 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
         </header>
 
-        {/* Article content */}
-        <div
-          className="prose prose-lg max-w-none glass rounded-2xl p-8 md:p-12"
-          dangerouslySetInnerHTML={{ __html: post.body }}
-        />
-
-        {/* Article footer */}
-        <footer className="mt-16 glass rounded-2xl p-8">
-          {post.tags && post.tags.length > 0 && (
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold text-white mb-4">Tags</h3>
-              <div className="flex flex-wrap gap-3">
-                {post.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:scale-105 transition-transform"
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
+        {/* Main content */}
+        <div className="prose prose-invert max-w-none">
+          <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="glass p-6 rounded-lg border border-white/10">
+              <h3 className="text-emerald-300 font-semibold mb-2">🏖️ Best Time to Visit</h3>
+              <p className="text-gray-300">{destination.best_time_to_visit}</p>
             </div>
+            <div className="glass p-6 rounded-lg border border-white/10">
+              <h3 className="text-emerald-300 font-semibold mb-2">💰 Budget</h3>
+              <p className="text-gray-300">{destination.budget || 'Check details'}</p>
+            </div>
+            <div className="glass p-6 rounded-lg border border-white/10">
+              <h3 className="text-emerald-300 font-semibold mb-2">⏱️ Duration</h3>
+              <p className="text-gray-300">{destination.estimated_days || '3-5'} days recommended</p>
+            </div>
+          </div>
+
+          <section className="mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">Overview</h2>
+            <p className="text-gray-300 leading-relaxed text-lg">{destination.description}</p>
+          </section>
+
+          {destination.attractions && (
+            <section className="mb-12">
+              <h2 className="text-3xl font-bold text-white mb-4">🎭 Top Attractions</h2>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-6 text-gray-300 leading-relaxed">
+                {destination.attractions}
+              </div>
+            </section>
           )}
 
-          {post.author && (
-            <div className="flex items-center p-6 glass rounded-xl">
-              {post.author.avatar && (
-                <img
-                  src={post.author.avatar.url}
-                  alt={post.author.name}
-                  className="w-16 h-16 rounded-full mr-6 border-2 border-blue-400/50"
-                />
-              )}
-              <div>
-                <p className="font-semibold text-white text-lg">{post.author.name}</p>
-                {post.author.bio && (
-                  <p className="text-gray-400 mt-1">{post.author.bio}</p>
-                )}
+          {destination.travel_tips && (
+            <section className="mb-12">
+              <h2 className="text-3xl font-bold text-white mb-4">✈️ Travel Tips</h2>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-6 text-gray-300 leading-relaxed">
+                {destination.travel_tips}
               </div>
-            </div>
+            </section>
           )}
-        </footer>
+
+          {destination.accommodation_tips && (
+            <section className="mb-12">
+              <h2 className="text-3xl font-bold text-white mb-4">🏨 Accommodation</h2>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-6 text-gray-300 leading-relaxed">
+                {destination.accommodation_tips}
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-white/10 my-12"></div>
+
+        {/* Author section */}
+        <section className="text-center">
+          <p className="text-gray-400">Last updated: {new Date(destination.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        </section>
       </article>
     </div>
   );

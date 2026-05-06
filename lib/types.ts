@@ -1,23 +1,45 @@
-// Contentstack content types
-export interface BlogPost {
+// Contentstack content types for Travel Guide
+
+export interface Destination {
   uid: string;
   title: string;
   description: string;
-  body: string;
+  location: string;
+  country: string;
+  best_time_to_visit: string;
   slug: string;
   published_at: string;
   updated_at: string;
-  tags?: string[];
   featured_image?: {
     url: string;
     title: string;
   };
-  author?: Author;
+  gallery_images?: Array<{
+    url: string;
+    title: string;
+  }>;
+  attractions?: string;
+  accommodation_tips?: string;
+  travel_tips?: string;
+  estimated_days?: number;
+  budget?: string;
   category?: Category;
   seo?: {
     title: string;
     description: string;
     keywords: string[];
+  };
+}
+
+export interface Attraction {
+  uid: string;
+  name: string;
+  description: string;
+  location: string;
+  type: string; // museum, park, landmark, etc
+  featured_image?: {
+    url: string;
+    title: string;
   };
 }
 
@@ -54,7 +76,7 @@ export interface SingleEntryResponse<T> {
 }
 
 // Query parameters
-export interface BlogPostQuery {
+export interface DestinationQuery {
   limit?: number;
   skip?: number;
   include_count?: boolean;

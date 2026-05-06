@@ -11,7 +11,8 @@ export default Stack;
 
 // Content types
 export const CONTENT_TYPES = {
-  BLOG_POST: 'blog_post',
+  DESTINATION: 'destination',
+  ATTRACTION: 'attraction',
   CATEGORY: 'category',
   AUTHOR: 'author',
 } as const;
