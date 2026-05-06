@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern Blog</title>
+<title>TravelHub</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-
 </head>
+
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
     <div class="container nav-flex">
-        <h1 class="logo">NexBlog</h1>
+        <h1 class="logo">TravelHub</h1>
 
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Authors</a></li>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">About</a></li>
         </ul>
 
         <input type="text" placeholder="Search..." class="search">
@@ -28,100 +28,82 @@
 
 <!-- HERO -->
 <header class="hero">
-    <h1>Welcome to Our Blog</h1>
-    <p>Discover insights, stories, and tech trends</p>
-    <button class="cta">Explore Blog</button>
+    <h1>Explore the World 🌍</h1>
+    <p>Discover destinations, travel tips, and unforgettable experiences</p>
+    <button class="cta">Browse Destinations</button>
 </header>
 
-<!-- TRENDING -->
-<section class="trending container">
-    <h2>🔥 Trending Topics</h2>
-    <div class="tags">
-        <span>#AI</span>
-        <span>#WebDev</span>
-        <span>#Cloud</span>
-        <span>#Startups</span>
-    </div>
-</section>
-
-<!-- POSTS -->
+<!-- TOP DESTINATIONS -->
 <section class="posts container">
-    <h2>Featured Posts</h2>
+    <h2>🌍 Top Destinations</h2>
 
-    <div class="grid">
+    <div class="grid" id="destinations">
 
+        <!-- STATIC (will replace with CMS later) -->
         <div class="card">
-            <img src="assets/post1.jpg">
-            <h3>Web Development Basics</h3>
-            <p>Start your journey in web development.</p>
+            <img src="https://source.unsplash.com/400x300/?bali">
+            <h3>Bali, Indonesia</h3>
+            <p>Best Time: April–October</p>
+            <p>Budget: ₹40,000</p>
         </div>
 
         <div class="card">
-            <img src="assets/post2.jpg">
-            <h3>UI Design Principles</h3>
-            <p>Make your designs look clean and modern.</p>
+            <img src="https://source.unsplash.com/400x300/?paris">
+            <h3>Paris, France</h3>
+            <p>Best Time: June–August</p>
+            <p>Budget: ₹80,000</p>
         </div>
 
         <div class="card">
-            <img src="assets/post3.jpg">
-            <h3>Startup Guide</h3>
-            <p>Build and scale your startup.</p>
+            <img src="https://source.unsplash.com/400x300/?switzerland">
+            <h3>Swiss Alps</h3>
+            <p>Best Time: December–March</p>
+            <p>Budget: ₹1,20,000</p>
         </div>
 
     </div>
 </section>
 
-<!-- CATEGORIES -->
-<section class="categories container">
-    <h2>Categories</h2>
+<!-- TRIP PLANNER -->
+<section class="trip-planner container">
+    <h2>✈️ Plan Your Trip</h2>
     <div class="grid">
-        <div class="cat">💻 Tech</div>
-        <div class="cat">🎨 Design</div>
-        <div class="cat">🚀 Startup</div>
-        <div class="cat">☁️ Cloud</div>
-    </div>
-</section>
-
-<!-- AUTHOR -->
-<section class="author container">
-    <h2>Meet the Author</h2>
-    <div class="author-box">
-        <img src="assets/profile.jpg">
-        <div>
-            <h3>Sushmitha</h3>
-            <p>Sharing knowledge on Web, AI & Cloud</p>
-        </div>
+        <div class="card">📅 Best Time to Visit</div>
+        <div class="card">💰 Budget Planning</div>
+        <div class="card">🏨 Accommodation Tips</div>
+        <div class="card">📍 Must-Visit Places</div>
     </div>
 </section>
 
 <!-- STATS -->
 <section class="stats">
     <div>
-        <h3>50+</h3>
-        <p>Articles</p>
+        <h3>100+</h3>
+        <p>Destinations</p>
     </div>
     <div>
-        <h3>10K+</h3>
-        <p>Readers</p>
+        <h3>50K+</h3>
+        <p>Travelers</p>
     </div>
     <div>
-        <h3>5+</h3>
-        <p>Categories</p>
+        <h3>500+</h3>
+        <p>Tips</p>
     </div>
 </section>
 
 <!-- NEWSLETTER -->
 <section class="newsletter">
-    <h2>Subscribe</h2>
+    <h2>Subscribe for Travel Updates</h2>
     <input type="email" placeholder="Enter email">
     <button>Subscribe</button>
 </section>
 
 <!-- FOOTER -->
 <footer>
-    <p>© 2026 NexBlog</p>
+    <p>© 2026 TravelHub 🌍</p>
 </footer>
 
 <script src="js/main.js"></script>
+
 </body>
 </html>
