@@ -51,7 +51,7 @@ export const SAMPLE_DESTINATIONS = [
     published_at: new Date('2024-02-10').toISOString(),
     updated_at: new Date('2024-02-10').toISOString(),
     featured_image: {
-      url: 'https://images.unsplash.com/photo-1540959375944-7049f642e9f1',
+      url: 'https://img.freepik.com/free-photo/aerial-view-tokyo-cityscape-with-fuji-mountain-japan_335224-148.jpg?semt=ais_hybrid&w=740&q=80',
       title: 'Tokyo Skyline at Night',
     },
     estimated_days: 6,
@@ -93,7 +93,7 @@ export const SAMPLE_DESTINATIONS = [
     published_at: new Date('2024-03-05').toISOString(),
     updated_at: new Date('2024-03-05').toISOString(),
     featured_image: {
-      url: 'https://images.unsplash.com/photo-1537225228614-b4fad34a2b08',
+      url: 'https://www.touracle.in/wp-content/uploads/2024/11/1.jpg',
       title: 'Bali Rice Terraces',
     },
     estimated_days: 7,
