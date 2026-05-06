@@ -51,7 +51,7 @@ export const SAMPLE_DESTINATIONS = [
     published_at: new Date('2024-02-10').toISOString(),
     updated_at: new Date('2024-02-10').toISOString(),
     featured_image: {
-      url: 'https://images.unsplash.com/photo-1540959375944-7049f642e9f1?w=1200&h=600&fit=crop',
+      url: 'https://images.unsplash.com/photo-1540959375944-7049f642e9f1',
       title: 'Tokyo Skyline at Night',
     },
     estimated_days: 6,
@@ -93,7 +93,7 @@ export const SAMPLE_DESTINATIONS = [
     published_at: new Date('2024-03-05').toISOString(),
     updated_at: new Date('2024-03-05').toISOString(),
     featured_image: {
-      url: 'https://images.unsplash.com/photo-1537225228614-b4fad34a2b08?w=1200&h=600&fit=crop',
+      url: 'https://images.unsplash.com/photo-1537225228614-b4fad34a2b08',
       title: 'Bali Rice Terraces',
     },
     estimated_days: 7,

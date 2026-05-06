@@ -47,7 +47,18 @@ export async function getEntries(contentType: string, query?: any) {
     console.warn('Contentstack API error, using sample data:', error);
     // Fallback to sample data when CMS is unavailable
     if (contentType === CONTENT_TYPES.DESTINATION) {
-      return SAMPLE_DESTINATIONS;
+      // Apply same filtering to sample data
+      let filtered = [...SAMPLE_DESTINATIONS];
+      
+      if (query?.query?.slug?.$eq) {
+        filtered = filtered.filter((d: any) => d.slug === query.query.slug.$eq);
+      }
+      
+      if (query?.limit) {
+        filtered = filtered.slice(0, query.limit);
+      }
+      
+      return filtered;
     }
     return [];
   }
