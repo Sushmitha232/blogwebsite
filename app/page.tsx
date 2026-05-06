@@ -36,7 +36,7 @@ export default async function Home() {
             Plan your next journey with insider tips and authentic experiences.
           </p>
           <Link
-            href="/destinations"
+            href="/blog"
             className="inline-block bg-gradient-to-r from-emerald-600 to-blue-600 text-white px-10 py-4 rounded-full font-semibold hover:from-emerald-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 glow shadow-lg"
           >
             Browse Destinations
@@ -69,7 +69,7 @@ export default async function Home() {
                       <span className="text-gray-400">{dest.estimated_days || '3-5'} days</span>
                     </div>
                     <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-emerald-300 transition-colors">
-                      <Link href={`/destinations/${dest.slug}`}>
+                      <Link href={`/blog/${dest.slug}`}>
                         {dest.title}
                       </Link>
                     </h3>
@@ -77,7 +77,7 @@ export default async function Home() {
                       {dest.description}
                     </p>
                     <Link
-                      href={`/destinations/${dest.slug}`}
+                      href={`/blog/${dest.slug}`}
                       className="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-medium transition-colors group"
                     >
                       Learn more
