@@ -2,14 +2,15 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import { formatBlogPost } from '@/lib/utils';
 import { BlogPost } from '@/lib/types';
+import { getEntries, CONTENT_TYPES } from '@/lib/contentstack';
 
 async function getBlogPosts() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog?limit=10`, {
-      cache: 'no-store',
+    const posts = await getEntries(CONTENT_TYPES.BLOG_POST, {
+      limit: 10,
+      include_count: true,
     });
-    const data = await res.json();
-    return data.success ? data.data : [];
+    return posts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
     return [];

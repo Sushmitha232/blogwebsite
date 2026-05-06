@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import Header from '@/components/Header';
+import { getEntries, CONTENT_TYPES } from '@/lib/contentstack';
 
 async function getLatestPosts() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog?limit=3`, {
-      cache: 'no-store',
+    const posts = await getEntries(CONTENT_TYPES.BLOG_POST, {
+      limit: 3,
+      include_count: true,
     });
-    const data = await res.json();
-    return data.success ? data.data : [];
+    return posts;
   } catch (error) {
     console.error('Error fetching latest posts:', error);
     return [];

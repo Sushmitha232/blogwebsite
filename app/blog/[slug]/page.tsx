@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import { formatBlogPost, generateMetaTags } from '@/lib/utils';
 import { BlogPost } from '@/lib/types';
+import { getEntries, CONTENT_TYPES } from '@/lib/contentstack';
 
 interface BlogPostPageProps {
   params: {
@@ -12,11 +13,16 @@ interface BlogPostPageProps {
 
 async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/${slug}`, {
-      cache: 'no-store',
-    });
-    const data = await res.json();
-    return data.success ? data.data : null;
+    const query = {
+      query: {
+        slug: {
+          $eq: slug,
+        },
+      },
+    };
+
+    const posts = await getEntries(CONTENT_TYPES.BLOG_POST, query);
+    return posts && posts.length > 0 ? posts[0] : null;
   } catch (error) {
     console.error('Error fetching blog post:', error);
     return null;
